@@ -7,19 +7,30 @@ window.addEventListener('scroll', () => {
 // Mobile menu toggle
 const toggle = document.querySelector('.nav-toggle');
 const navLinks = document.querySelector('.nav-links');
+const navClose = document.querySelector('.nav-close');
+const backdrop = document.querySelector('.nav-backdrop');
 
-toggle.addEventListener('click', () => {
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', !expanded);
-    navLinks.classList.toggle('active');
-});
+function openMenu() {
+    navLinks.classList.add('active');
+    backdrop.classList.add('active');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.style.display = 'none';
+}
+
+function closeMenu() {
+    navLinks.classList.remove('active');
+    backdrop.classList.remove('active');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.style.display = 'flex';
+}
+
+toggle.addEventListener('click', openMenu);
+navClose.addEventListener('click', closeMenu);
+backdrop.addEventListener('click', closeMenu);
 
 // Close menu on link click
 navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        toggle.setAttribute('aria-expanded', 'false');
-    });
+    link.addEventListener('click', closeMenu);
 });
 
 // Animate elements on scroll
